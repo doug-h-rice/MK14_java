@@ -1,19 +1,27 @@
-# MK14_java
+and MK-14# MK14_java
 java Science of Cambridge MK-14 port 
 
 MK14 emulator ported to Java
 Doug Rice 2018	13/05/2018
 
 Status:	
-	Does not run in real time yet
-	Does not run Babbage.hex correctly.
 
-I brought one when they came out in about 1976 or 1977.
+Does not run in real time yet
+	
+Does not run Karen Ortons Babbage.hex correctly yet.
+
+
+
+I brought a real MK-14 when they came out in about 1976 or 1977.
 I had to wait all summer holidays for delivery.
 
-Paul Robson wrote an emulator for DOS in 1998. 
+Paul Robson wrote an emulator for DOS in 1998.
+
 The CPU.java is a port from his CPU.C. The JMP bug has been fixed.
+
 Rom.java has both versions of the Monitor
+
+AnimateMK14 started as Animate.java, which is worth understanding.
 
 References:	
 	http://www.java2s.com/Code/Java/2D-Graphics-GUI/HowtocreateAnimationPaintandthread.htm
