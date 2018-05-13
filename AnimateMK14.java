@@ -292,13 +292,14 @@ class Display {
 SEC: x.x User code eample - to save typing it in each time.
 =====================================================================
 */
+
 class Code {
 
 int Code[] =
 {/*
  *	 
  * Simple user program that set the FLAG LEDs
- * run from 0FE0
+ * run from 0FD0
  */
  
 0xC4,0x07,
@@ -562,6 +563,17 @@ Bit 	Function 	Notes
 	}
   }
 
+  public void load_code() {
+	
+	/* load 32 bytes of user's code */
+	/* 13/5/2018 - commented out as it was overwritting some of Babbage.hex */
+	
+	for( int count = 0; count < 32 ; count++){	  
+	  cpu.Memory[ count +0x0FD0 ] = (byte) code.Code[ count ] ; 
+	}
+	
+  }
+  
   public void go() {
 	/*
 	* Load ROM - 
@@ -574,11 +586,6 @@ Bit 	Function 	Notes
 	  cpu.Memory[ count  ] = (byte) rom.readROM( count , 1 ) ; // use 1 for  0000 00 ROM, use 0 for ---- -- ROM 
 	}
 	
-	/* load 32 bytes of user's code */
-	for( int count = 0; count < 32 ; count++){	  
-	  cpu.Memory[ count +0x0FD0 ] = (byte) code.Code[ count ] ; 
-	}
-	
 	for ( int count = 0 ; count < 10 ; count++ ){
 	  //disp.write_pc( count , cpu.dispMemWrite[ count ] );
 	  disp.dispMemWrite[ count ] = (byte) 0xff;
@@ -586,7 +593,6 @@ Bit 	Function 	Notes
 	  cpu.dispMemWriteTmr[   count ] = 2;
 
 	}
-
 	
 	//cpu.load_both_formats( "Clock.hex" );
 
@@ -643,10 +649,18 @@ Bit 	Function 	Notes
 
     AnimateMK14 f2 = new AnimateMK14();
 
+	/* load example code into RAM */
+	f2.load_code();
+	
+	
+	/* load user program , before ROM is copied across */
 	if ( args.length > 0 ){
       System.out.println( args.length+ " | " + args[0] ); 
 	  f2.cpu.load_both_formats( args[0] );
 	}
+	
+	
+	
 	
 	f2.setTitle("Science Of Cambridge MK-14 emulator ");
     f2.setSize(450, 170);
