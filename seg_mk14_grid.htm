@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table {
+    border-collapse: collapse;
+	border: 5px solid #ddd;
+    border-radius: 25px;
+}
+
+th, td {
+    padding: 5px;
+    text-align: top;
+	background-color:#fdc;
+    border: 3px solid #ddd;
+    border-radius: 25px;
+}
+
+td:hover{background-color:#f5f5f5}
+</style>
+</head>
+<body>
+SC/MP instruction grid:-<P>
+
+<table border=1 >
+<TR><Th>  </th><th>0x  </th><th> 1x </th><th> 2x </th><th> 3x </th><th> 4x </th><th> 5x </th><th> 6x </th><th> 7x </th><th> 8x </th><th> 9x  </th><th> Ax </th><th> Bx </th><th> Cx </th><th> Dx  </th><th> Ex  </th><th> Fx </th></tr>
+<TR><Th>x0</th><td>HALT</td><td>    </td><td>  </td><td> XPAL 0 </td><td> LDE </td><td> ANE </td><td> XRE </td><td> ADE </td><td>  </td><td> JMP(0) </td><td>  </td><td></td><td> LD(0) </td><td> AND(0) </td><td> XOR(0) </td><td> ADD(0)  </td></tr>
+<TR><Th>x1</th><td>XAE </td><td>    </td><td>  </td><td> XPAL 1 </td><td>  </td><td>  </td><td> </td><td>  </td><td>  </td><td>  JMP(1) </td><td>  </td><td>  			</td><td> LD(1) </td><td> AND(1) </td><td> XOR(1) </td><td> ADD(1) </td></tr>
+<TR><Th>x2</th><td>CCL </td><td>    </td><td>  </td><td> XPAL 2 </td><td>  </td><td>  </td><td>  </td><td>  </td><td>  </td><td> JMP(2) </td><td>  </td><td>  			</td><td> LD(2) </td><td> AND(2) </td><td> XOR(2) </td><td> ADD(2) </td></tr>
+<TR><Th>x3</th><td>SCL </td><td>    </td><td>  </td><td> XPAL 3 </td><td>  </td><td>  </td><td>  </td><td>  </td><td>  </td><td> JMP(3) </td><td>  </td><td>  			</td><td> LD(3) </td><td> AND(3) </td><td> XOR(3) </td><td> ADD(3) </td></tr>
+<TR><Th>x4</th><td>DINT</td><td>    </td><td>  </td><td> XPAH 0 </td><td>  </td><td>  </td><td>  </td><td>  </td><td>  </td><td> JP(0) </td><td>  </td><td>  			</td><td> LDI   </td><td> ANI </td><td> XRI </td><td> ADI </td></tr>
+<TR><Th>x5</th><td>IEN </td><td>    </td><td>  </td><td> XPAH 1 </td><td>  </td><td>  </td><td>  </td><td>  </td><td>  </td><td> JP(1) </td><td>  </td><td>  			</td><td> LD@(1) </td><td> AND@(1) </td><td> XOR@(1) </td><td> ADD@(1)  </td></tr>
+<TR><Th>x6</th><td>CSA </td><td>    </td><td>  </td><td> XPAH 2 </td><td>  </td><td>  </td><td>  </td><td>  </td><td>  </td><td> JP(2) </td><td>  </td><td>  			</td><td> LD@(2) </td><td> AND@(2) </td><td> XOR@(2) </td><td> ADD@(2)  </td></tr>
+<TR><Th>x7</th><td>CAS </td><td>    </td><td>  </td><td> XPAH 3 </td><td>  </td><td>  </td><td>  </td><td>  </td><td>  </td><td> JP(3) </td><td>  </td><td>  			</td><td> LD@(3) </td><td> AND@(3) </td><td> XOR@(3) </td><td> ADD@(3)  </td></tr>
+<TR><Th>x8</th><td>NOP </td><td>    </td><td>  </td><td>        </td><td>  </td><td> ORE </td><td> DAE </td><td> CAE </td><td>   </td><td> JZ(0) </td><td> ILD (0)</td><td> DLD (0) </td><td> ST(0) </td><td>OR(0)  </td><td> DAD(0)  </td><td> CAD(0) </td></tr>
+<TR><Th>x9</th><td>    </td><td>SIO </td><td>  </td><td>        </td><td>  </td><td>  </td><td>  </td><td>  </td><td>  </td><td> JZ(1) </td><td> ILD (1) </td><td> DLD (1)</td><td> ST(1) </td><td>OR(1)  </td><td> DAD(1)  </td><td> CAD(1) </td></tr>
+<TR><Th>xA</th><td>    </td><td>    </td><td>  </td><td>        </td><td>  </td><td>  </td><td>  </td><td>  </td><td>  </td><td> JZ(2) </td><td> ILD (2) </td><td> DLD (2)</td><td> ST(2) </td><td>OR(2)  </td><td> DAD(2)  </td><td> CAD(2) </td></tr>
+<TR><Th>xB</th><td>    </td><td>    </td><td>  </td><td>        </td><td>  </td><td>  </td><td>  </td><td>  </td><td>  </td><td> JZ(3) </td><td> ILD (3) </td><td> DLD (3)</td><td> ST(3) </td><td>OR(3)  </td><td> DAD(3)  </td><td> CAD(3) </td></tr>
+<TR><Th>xC</th><td>    </td><td>SR  </td><td>  </td><td> XPCC 0 </td><td>  </td><td>  </td><td>  </td><td>  </td><td>  </td><td> JNZ(0) </td><td>  	   </td><td>          </td><td> STI    </td><td> ORI </td><td> DAI </td><td> CAI </td></tr>
+<TR><Th>xD</th><td>    </td><td>SRL </td><td>  </td><td> XPCC 1 </td><td>  </td><td>  </td><td>  </td><td>  </td><td>  </td><td> JNZ(1) </td><td>  	   </td><td>  		  </td><td> ST@(1) </td><td>OR@(1)  </td><td> DAD@(1)  </td><td> CAD@(1) </td></tr>
+<TR><Th>xE</th><td>    </td><td>RR  </td><td>  </td><td> XPCC 2 </td><td>  </td><td>  </td><td>  </td><td>  </td><td>  </td><td> JNZ(2) </td><td>  	   </td><td>  		  </td><td> ST@(2) </td><td>OR@(2)  </td><td> DAD@(2)  </td><td> CAD@(2) </td></tr>
+<TR><Th>xF</th><td>    </td><td>RRL </td><td>  </td><td> XPCC 3 </td><td>  </td><td>  </td><td>  </td><td>  </td><td> DLY </td><td> JNZ(3) </td><td>  	   </td><td>  	  </td><td> ST@(3) </td><td>OR@(3)  </td><td> DAD@(3)  </td><td> CAD@(3) </td></tr>
+</table>
+
+<HR>
+References:
+<a href=http://ccgi.dougrice.plus.com/cgi-bin/wiki.pl?MK14_Notes target=new4> My notes</a> |
+
+<a href=http://www.robsons.org.uk/archive/members.aol.com/mk14emu/ target=new1> Paul Robson's page</a> |
+<a href=http://mymk14.co.uk/paulRobson/emulator.htm target=new1> copy of Paul Robson's pages </a> |
+
+<a href=http://techlib.com/area_50/Readers/Karen/micro.htm target=new2 > Karen Orton's Page techlib.com/area_50/Readers/Karen/micro.htm</a> |
+<a href=http://www.vintage-radio.net/forum/showthread.php?t=92999 target=new2 > more..</a> |
+
+<a href=http://www.dougrice.plus.com/dev/seg_MK14.txt target=new3> MK_14 Rom listing</a> |
+<a href=http://ccgi.dougrice.plus.com/cgi-bin/wiki.pl?MK14_Notes target=new4> My notes</a> |
+<a href=http://ccgi.dougrice.plus.com/cgi-bin/wiki.pl?MK14_Scmp_Code target=new5> Scmp_Code </a> |
+<a href=http://121.73.5.55/scamp/scmp.htm target=new6 > Scmp info </a> |
+<a href=http://203.118.152.120/scamp/scmp.htm target=Elector > Elector Scmp info </a> |
+<a href=http:seg_mk14_grid.htm target=grid > ins grid </a> |
+<a href=http:seg_mk14_scmp_ins.png target=grid > ins grid </a> |
+<a href=http://www.dougrice.plus.com target=new3> My website </a> |
+</body>
+</html>
