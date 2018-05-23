@@ -119,7 +119,7 @@ import javax.swing.JFrame;
 
 /*
 ====================================================================
-SEC: x.x Display
+SEC: x.x Display and Keyboard Logic
 =====================================================================
 */
 /* put memory in Cpu */
@@ -164,59 +164,27 @@ class Memory {
 */
 class Display {
 	
-	byte dispMemWrite[] = new byte[16];
-	byte dispMemRead[]  = new byte[16];
+	byte dispMemWrite[] = new byte[16]; /* MK14 writes to display */
+	byte dispMemRead[]  = new byte[16]; /* tracks key presses -  */
 	
 	int want;
-
-	public int read( int addr ){
-		/* map pressed keys to this array */
-		return dispMemRead[ addr ] ;
-//		return dispMemWrite[ addr ] ;
 		
-	};
-
-	public void write( int addr , int data ){
-		dispMemWrite[ addr ] = ( byte ) data;
-	};
-
-	public void setbit( int addr , int bit ){
-		//dispMemWrite[ addr ] |= 1<< bit;
-		dispMemRead[  addr ]   |= 1 << bit;
-	};
-
-	
-	public void clearBit( int addr , int bit ){
-		//dispMemWrite[ addr ] &= ~(1<< bit) ;
-		dispMemRead[  addr ] &= ~(1<< bit) ;
-	};
-
-	
-	public void addr_bit( int addr , int bit ){
-		//dispMemWrite[ addr ] &= ~(1<< bit) ;
-		//dispMemRead[  addr ] &= ~(1<< bit) ;
-		if ( want ==1 ){	
-			dispMemRead[  addr ]   |= 1 << bit;
-		} else {
-			dispMemRead[  addr ] &= ~(1<< bit) ;
-		}
-	};
-
-	
 	public byte read_pc( int addr ){
-		/* map pressed keys to this array */
+		/*
+		* CPU writes to this address to illuminate the Display digits
+		* When painting the display read this array to see what segments to display 
+		* Index by digit. 
+		*/
 		return dispMemWrite[ addr ] ;
 	};
 
-	public void write_pc( int addr , byte data ){
-		dispMemRead[ addr ] = data;
-	};
-
-	
-	public void mapKey( int key , int action ){
-		want = action;
 /*
   * The Keyboard is also a challenge.
+  *
+  * Track key presses and releases in dispMemRead[]
+  *
+  * When CPU reads address, read out of dispMemRead[]
+  *  
   * G = GO
   * M = MEM
   * T = TERM
@@ -243,9 +211,24 @@ class Display {
   * 0D00+   8  7  5  4  3  2  1  0
   * =================================
   *
-
 */	  
-		
+/*
+	public void write_pc( int addr , byte data ){
+		dispMemRead[ addr ] = data;
+	};
+*/
+	/* map pressed keys to bits in dispMemRead[]  array */
+	public void addr_bit( int addr , int bit ){
+		if ( want ==1 ){	
+			dispMemRead[  addr ]   |= 1 << bit;
+		} else {
+			dispMemRead[  addr ] &= ~(1<< bit) ;
+		}
+	};
+	
+	/* this function is called when a key is pressed or released to map the key to the bit in the key matrix */
+	public void mapKey( int key , int action ){
+		want = action;
 			/* 0..7 */
 			if ( key == 48 ){ addr_bit( 0 , 7 );};		
 			if ( key == 49 ){ addr_bit( 1 , 7 );};		
@@ -301,7 +284,9 @@ int Code[] =
  * Simple user program that set the FLAG LEDs
  * run from 0FD0
  */
- 
+
+
+/* sc/mp code to set the flags in the status register */ 
 0xC4,0x07,
 0x07,
 0x3f,
@@ -310,11 +295,9 @@ int Code[] =
 0x07,
 0x3f,
 
-
 0xC4,0x04,
 0x07,
 0x3f,
-
 
 0xC4,0x00,
 0x07,
@@ -328,14 +311,16 @@ int Code[] =
 0x07,
 0x3f,
 
-
-0xC4,0x07,
-0x07,
-0x3f,
-
 /* go back to 0F90 , by swaping P[0].low */
 0xC4,0xCF,	
 0x30,		/* XPAL 0 */
+
+/* code to load A and XOR and store it */
+0xC4,0xAA, /* load A */
+0xE4,0x55, /* XOR Imediate */
+0xc8,0x02, /* Store in memory */
+0x3f,	   /* return to monitor */	
+0x00,	   /* location to store result which is displayed by the monitor */	
 
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
@@ -390,6 +375,8 @@ https://docs.oracle.com/javase/tutorial/uiswing/events/keylistener.html
 
 			disp.mapKey(  key ,  0 );
 			/* Reset */
+			//System.out.print("_");
+
 			if ( key == 'R' ){ cpu.ResetCPU(  );   }	// RESET		
 			if ( key == 'P' ){ 
 			  //cpu.ResetCPU(  );   	// RESET		
@@ -413,6 +400,7 @@ https://docs.oracle.com/javase/tutorial/uiswing/events/keylistener.html
 			key = e.getKeyCode();
 			key2 = '/';			
 			disp.mapKey(  key ,  1 );
+			//System.out.print("-");
 			/* Reset */
 			if ( key == 'R' ){ cpu.ResetCPU(  );   };	// RESET			
 		}
@@ -473,6 +461,8 @@ https://docs.oracle.com/javase/tutorial/uiswing/events/keylistener.html
  
 	  
   public void paint(Graphics g) {
+	//System.out.print("#");
+  
     super.paint(g);
     if (insets == null) {
       insets = getInsets();
@@ -492,9 +482,8 @@ https://docs.oracle.com/javase/tutorial/uiswing/events/keylistener.html
 	//int count;
 
 */	
-	setBackground(Color.BLACK);
+	  //g.setBackground(Color.BLACK);
 
-	  
 	  g.setColor(Color.BLACK);
       // do something to test keyboard presses.	  
 	  g.drawString("Flags - F2,F1,F0", 10+x, 70+y );  
@@ -568,7 +557,7 @@ Bit 	Function 	Notes
 	/* load 32 bytes of user's code */
 	/* 13/5/2018 - commented out as it was overwritting some of Babbage.hex */
 	
-	for( int count = 0; count < 32 ; count++){	  
+	for( int count = 0; count < 38 ; count++){	  
 	  cpu.Memory[ count +0x0FD0 ] = (byte) code.Code[ count ] ; 
 	}
 	
@@ -613,13 +602,14 @@ Bit 	Function 	Notes
       }
 */
 		count ++;
-        repaint();
-		cpu.Execute( 2500 );
+		cpu.Execute( 1000 );
+		repaint();
 	   }
     };
 	
     Timer timer = new Timer();
-    timer.schedule(task, 0, DELAY);
+	timer.schedule(task, 0, DELAY);
+
   }
 
   public static void main(String args[]) {
@@ -646,21 +636,16 @@ Bit 	Function 	Notes
 	f.setVisible(true);
     f.go();
 */
-
     AnimateMK14 f2 = new AnimateMK14();
 
 	/* load example code into RAM */
 	f2.load_code();
-	
 	
 	/* load user program , before ROM is copied across */
 	if ( args.length > 0 ){
       System.out.println( args.length+ " | " + args[0] ); 
 	  f2.cpu.load_both_formats( args[0] );
 	}
-	
-	
-	
 	
 	f2.setTitle("Science Of Cambridge MK-14 emulator ");
     f2.setSize(450, 170);

@@ -3,10 +3,7 @@ MK14 emulator ported to Java
 Doug Rice 2018	13/05/2018
 
 Status:	
-	Does not run i real time yet
-	Does not run Babbage.hex correctly.
-
-
+	Does not run in real time yet
 
 I brought one when they came out in about 1976 or 1977.
 I had to wait all summer holidays for delivery.
@@ -32,14 +29,8 @@ Why?:
 	
 	- Try out Java2D programming.
 	- try and work towards an Android App.
-
 	
 Files:
-	Rom.java 			- contains SCIOS ROM code
-	Cpu.java 			- contains CPU code ported form Paul Robson's code. JMP bug fixed.
+	Rom.java 		- contains SCIOS ROM code
+	Cpu.java 		- contains CPU code ported form Paul Robson's code. JMP bug fixed.
 	AnimateMK14.java	- Contains Main() plus Display and keyboard. 
-
-
-
- 
-*/
