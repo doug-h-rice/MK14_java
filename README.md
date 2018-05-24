@@ -60,6 +60,7 @@ For examples, see elsewhere on my git hub and Other people's pages.
 
 	
 We need to build the MK14:
+<pre>
 	It has a PCB - This connects the CPU to the Memory map, RAM, ROM, Keyboard, Display and Crystal.
 	keyboard - assemble - Ensure no keys are pressed. When we run the GUI, track key presses in another memory.  
 	display  - Assemble - When the digit is written to, the segments light up, so we need to repaint GUI periodically.  
@@ -69,7 +70,7 @@ We need to build the MK14:
 	Insert the Crystal  - The CPU has a clock that runs the program counter
 	Do a visual check
 	Power up 			- Start the timer that makes the CPU run some instructions and repaint the GUI.
-	
+</pre>	
 Press keys and play!
 	
 	
