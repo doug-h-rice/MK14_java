@@ -57,3 +57,19 @@ Files:
 </pre>
 
 For examples, see elsewhere on my git hub and Other people's pages.
+
+	
+We need to build the MK14:
+	It has a PCB - This connects the CPU to the Memory map, RAM, ROM, Keyboard, Display and Crystal.
+	keyboard - assemble - Ensure no keys are pressed. When we run the GUI, track key presses in another memory.  
+	display  - Assemble - When the digit is written to, the segments light up, so we need to repaint GUI periodically.  
+	You plug the ROM in - load ROM into the Memory Map that the CPU can access.
+	You plug the RAM in - We can add a function to preload the RAM to save typing!!
+	You plug the CPU in - The PCB connects it to memory and teh 
+	Insert the Crystal  - The CPU has a clock that runs the program counter
+	Do a visual check
+	Power up 			- Start the timer that makes the CPU run some instructions and repaint the GUI.
+	
+Press keys and play!
+	
+	
